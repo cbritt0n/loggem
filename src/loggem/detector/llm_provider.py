@@ -7,7 +7,7 @@ Supports multiple LLM backends including HuggingFace, OpenAI, Anthropic, and cus
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from typing import Any, Dict, Optional
+from typing import Any
 
 from loggem.core.logging import get_logger
 
@@ -17,7 +17,7 @@ logger = get_logger(__name__)
 class LLMProvider(ABC):
     """Abstract base class for LLM providers."""
 
-    def __init__(self, config: Dict[str, Any]) -> None:
+    def __init__(self, config: dict[str, Any]) -> None:
         """
         Initialize the LLM provider.
 
@@ -62,7 +62,7 @@ class LLMProvider(ABC):
         pass
 
     @abstractmethod
-    def get_info(self) -> Dict[str, Any]:
+    def get_info(self) -> dict[str, Any]:
         """Get information about the provider and model."""
         pass
 
@@ -70,7 +70,7 @@ class LLMProvider(ABC):
 class HuggingFaceProvider(LLMProvider):
     """HuggingFace Transformers provider for local models."""
 
-    def __init__(self, config: Dict[str, Any]) -> None:
+    def __init__(self, config: dict[str, Any]) -> None:
         """
         Initialize HuggingFace provider.
 
@@ -91,8 +91,8 @@ class HuggingFaceProvider(LLMProvider):
         self.cache_dir = config.get("cache_dir", "./models")
         self.trust_remote_code = config.get("trust_remote_code", False)
 
-        self.model: Optional[Any] = None
-        self.tokenizer: Optional[Any] = None
+        self.model: Any | None = None
+        self.tokenizer: Any | None = None
 
     def initialize(self) -> None:
         """Load the HuggingFace model and tokenizer."""
@@ -225,7 +225,7 @@ class HuggingFaceProvider(LLMProvider):
         self.is_initialized = False
         logger.info("huggingface_provider_cleaned_up")
 
-    def get_info(self) -> Dict[str, Any]:
+    def get_info(self) -> dict[str, Any]:
         """Get HuggingFace provider info."""
         info = {
             "provider": "huggingface",
@@ -245,7 +245,7 @@ class HuggingFaceProvider(LLMProvider):
 class OpenAIProvider(LLMProvider):
     """OpenAI API provider."""
 
-    def __init__(self, config: Dict[str, Any]) -> None:
+    def __init__(self, config: dict[str, Any]) -> None:
         """
         Initialize OpenAI provider.
 
@@ -260,7 +260,7 @@ class OpenAIProvider(LLMProvider):
         self.model = config.get("model", "gpt-4o-mini")
         self.base_url = config.get("base_url")
         self.organization = config.get("organization")
-        self.client: Optional[Any] = None
+        self.client: Any | None = None
 
     def initialize(self) -> None:
         """Initialize OpenAI client."""
@@ -271,8 +271,7 @@ class OpenAIProvider(LLMProvider):
             from openai import OpenAI
         except ImportError:
             raise ImportError(
-                "OpenAI provider requires 'openai' package. "
-                "Install with: pip install openai"
+                "OpenAI provider requires 'openai' package. Install with: pip install openai"
             )
 
         logger.info("initializing_openai_provider", model=self.model)
@@ -314,7 +313,7 @@ class OpenAIProvider(LLMProvider):
         self.is_initialized = False
         logger.info("openai_provider_cleaned_up")
 
-    def get_info(self) -> Dict[str, Any]:
+    def get_info(self) -> dict[str, Any]:
         """Get OpenAI provider info."""
         return {
             "provider": "openai",
@@ -326,7 +325,7 @@ class OpenAIProvider(LLMProvider):
 class AnthropicProvider(LLMProvider):
     """Anthropic Claude API provider."""
 
-    def __init__(self, config: Dict[str, Any]) -> None:
+    def __init__(self, config: dict[str, Any]) -> None:
         """
         Initialize Anthropic provider.
 
@@ -337,7 +336,7 @@ class AnthropicProvider(LLMProvider):
         super().__init__(config)
         self.api_key = config.get("api_key")
         self.model = config.get("model", "claude-3-haiku-20240307")
-        self.client: Optional[Any] = None
+        self.client: Any | None = None
 
     def initialize(self) -> None:
         """Initialize Anthropic client."""
@@ -387,7 +386,7 @@ class AnthropicProvider(LLMProvider):
         self.is_initialized = False
         logger.info("anthropic_provider_cleaned_up")
 
-    def get_info(self) -> Dict[str, Any]:
+    def get_info(self) -> dict[str, Any]:
         """Get Anthropic provider info."""
         return {
             "provider": "anthropic",
@@ -399,7 +398,7 @@ class AnthropicProvider(LLMProvider):
 class OllamaProvider(LLMProvider):
     """Ollama local API provider."""
 
-    def __init__(self, config: Dict[str, Any]) -> None:
+    def __init__(self, config: dict[str, Any]) -> None:
         """
         Initialize Ollama provider.
 
@@ -413,7 +412,7 @@ class OllamaProvider(LLMProvider):
             raise ValueError("model is required for Ollama provider")
 
         self.base_url = config.get("base_url", "http://localhost:11434")
-        self.client: Optional[Any] = None
+        self.client: Any | None = None
 
     def initialize(self) -> None:
         """Initialize Ollama client."""
@@ -424,8 +423,7 @@ class OllamaProvider(LLMProvider):
             import requests
         except ImportError:
             raise ImportError(
-                "Ollama provider requires 'requests' package. "
-                "Install with: pip install requests"
+                "Ollama provider requires 'requests' package. Install with: pip install requests"
             )
 
         logger.info(
@@ -482,7 +480,7 @@ class OllamaProvider(LLMProvider):
         self.is_initialized = False
         logger.info("ollama_provider_cleaned_up")
 
-    def get_info(self) -> Dict[str, Any]:
+    def get_info(self) -> dict[str, Any]:
         """Get Ollama provider info."""
         return {
             "provider": "ollama",
@@ -501,7 +499,7 @@ PROVIDERS = {
 }
 
 
-def create_provider(provider_type: str, config: Dict[str, Any]) -> LLMProvider:
+def create_provider(provider_type: str, config: dict[str, Any]) -> LLMProvider:
     """
     Create an LLM provider instance.
 
@@ -517,8 +515,7 @@ def create_provider(provider_type: str, config: Dict[str, Any]) -> LLMProvider:
     """
     if provider_type not in PROVIDERS:
         raise ValueError(
-            f"Unknown provider: {provider_type}. "
-            f"Available providers: {', '.join(PROVIDERS.keys())}"
+            f"Unknown provider: {provider_type}. Available providers: {', '.join(PROVIDERS.keys())}"
         )
 
     provider_class = PROVIDERS[provider_type]

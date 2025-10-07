@@ -8,10 +8,9 @@ from __future__ import annotations
 
 import json
 import re
-from typing import Any
 
 from loggem.core.config import get_settings
-from loggem.core.logging import get_logger, get_audit_logger
+from loggem.core.logging import get_audit_logger, get_logger
 from loggem.core.models import Anomaly, AnomalyType, LogEntry, Severity
 from loggem.detector.model_manager import ModelManager
 
@@ -103,7 +102,8 @@ Respond ONLY with the JSON object, no additional text."""
         # Get AI response
         try:
             response = self.model_manager.generate_response(
-                prompt, temperature=0.3  # Lower temperature for more consistent analysis
+                prompt,
+                temperature=0.3,  # Lower temperature for more consistent analysis
             )
 
             # Parse response
@@ -124,9 +124,7 @@ Respond ONLY with the JSON object, no additional text."""
 
         return None
 
-    def detect_batch(
-        self, entries: list[LogEntry], use_context: bool = True
-    ) -> list[Anomaly]:
+    def detect_batch(self, entries: list[LogEntry], use_context: bool = True) -> list[Anomaly]:
         """
         Detect anomalies in a batch of log entries.
 
@@ -171,9 +169,7 @@ Respond ONLY with the JSON object, no additional text."""
 
         return anomalies
 
-    def _build_prompt(
-        self, entry: LogEntry, context: list[LogEntry] | None = None
-    ) -> str:
+    def _build_prompt(self, entry: LogEntry, context: list[LogEntry] | None = None) -> str:
         """
         Build prompt for the model.
 

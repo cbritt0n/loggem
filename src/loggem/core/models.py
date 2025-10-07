@@ -10,10 +10,10 @@ from __future__ import annotations
 import hashlib
 from datetime import datetime
 from enum import Enum
-from typing import Any, Optional
+from typing import Any
 from uuid import UUID, uuid4
 
-from pydantic import BaseModel, Field, field_validator, ConfigDict
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 
 class Severity(str, Enum):
@@ -76,9 +76,9 @@ class LogEntry(BaseModel):
     source: str = Field(description="Source of the log entry")
     message: str = Field(description="Log message content")
     level: str = Field(default="INFO", description="Log level")
-    host: Optional[str] = Field(default=None, description="Hostname or IP")
-    user: Optional[str] = Field(default=None, description="Associated user")
-    process: Optional[str] = Field(default=None, description="Process name or PID")
+    host: str | None = Field(default=None, description="Hostname or IP")
+    user: str | None = Field(default=None, description="Associated user")
+    process: str | None = Field(default=None, description="Process name or PID")
     metadata: dict[str, Any] = Field(default_factory=dict, description="Additional metadata")
     raw: str = Field(description="Original raw log line")
 
@@ -152,7 +152,7 @@ class Anomaly(BaseModel):
     confidence: float = Field(ge=0.0, le=1.0, description="Confidence score")
     context: list[str] = Field(default_factory=list, description="Contextual log entries")
     indicators: list[str] = Field(default_factory=list, description="Detection indicators")
-    recommendation: Optional[str] = Field(default=None, description="Recommended action")
+    recommendation: str | None = Field(default=None, description="Recommended action")
     metadata: dict[str, Any] = Field(default_factory=dict, description="Additional metadata")
 
     @field_validator("confidence")

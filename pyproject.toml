@@ -109,8 +109,58 @@ target-version = ["py39", "py310", "py311", "py312"]
 [tool.ruff]
 line-length = 100
 target-version = "py39"
+
+[tool.ruff.lint]
 select = ["E", "F", "I", "N", "W", "UP", "B", "S", "C4", "DTZ", "T10", "ISC", "RET", "SIM", "ARG"]
-ignore = ["E501", "S101"]
+ignore = [
+    "E501",  # Line too long (handled by formatter)
+    "S101",  # Use of assert (OK in tests)
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = [
+    "S101",  # Assert statements OK in tests
+    "B017",  # pytest.raises(Exception) is intentional for testing any exception
+    "ARG001",  # Unused function arguments OK in test fixtures
+    "DTZ001",  # datetime without tz OK in tests
+    "DTZ005",  # datetime.now() without tz OK in tests
+    "DTZ007",  # datetime.strptime without tz OK in tests
+    "E402",  # Module level imports not at top OK for some test setups
+]
+"src/loggem/parsers/*" = [
+    "DTZ005",  # datetime.now() without tz - fallback for failed parsing
+    "DTZ006",  # datetime.fromtimestamp without tz - preserving log timestamps
+    "DTZ007",  # datetime.strptime without tz - parsing log timestamps as-is
+    "E722",   # Bare except OK for fallback datetime parsing
+    "ARG002", # Unused line_number parameter - part of parser interface
+    "S110",   # try-except-pass/continue OK for parsing errors
+    "S112",   # try-except-continue OK for parsing errors
+    "S314",   # XML parsing - Windows Event logs require it
+]
+"src/loggem/cli.py" = [
+    "B008",   # Function calls in defaults OK for Typer
+    "B904",   # Exception chaining - re-raising with context
+    "ARG001", # Unused CLI args OK - reserved for future use
+]
+"src/loggem/detector/llm_provider.py" = [
+    "B904",   # Exception chaining - re-raising with context
+    "ARG002", # Unused kwargs - part of provider interface
+    "S113",   # Requests timeout - local Ollama server
+]
+"src/loggem/performance/__init__.py" = [
+    "S324",   # MD5 - used for cache keys, not cryptographic
+]
+"src/loggem/streaming/__init__.py" = [
+    "E722",   # Bare except - intentional for queue overflow handling
+    "S110",   # try-except-pass - intentional for queue overflow
+    "ARG002", # Unused timeout - interface consistency
+]
+"src/loggem/core/config.py" = [
+    "S108",   # /tmp usage - configurable via settings
+]
+"tests/test_streaming.py" = [
+    "SIM115", # Context manager - intentional for testing temp files
+]
 
 [tool.mypy]
 python_version = "3.9"

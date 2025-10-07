@@ -6,9 +6,7 @@ Rule-based detection for common attack patterns and misconfigurations.
 
 from __future__ import annotations
 
-from collections import Counter, defaultdict
-from datetime import datetime, timedelta
-from typing import Any
+from collections import defaultdict
 
 from loggem.core.logging import get_logger
 from loggem.core.models import Anomaly, AnomalyType, LogEntry, Severity
@@ -154,9 +152,7 @@ class PatternDetector:
         for entry in entries:
             # Check for suspicious keywords in message
             found_keywords = [
-                keyword
-                for keyword in self.SUSPICIOUS_KEYWORDS
-                if keyword in entry.message.lower()
+                keyword for keyword in self.SUSPICIOUS_KEYWORDS if keyword in entry.message.lower()
             ]
 
             if found_keywords:

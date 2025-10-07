@@ -6,8 +6,7 @@ Supports multiple LLM providers: HuggingFace, OpenAI, Anthropic, Ollama, and cus
 
 from __future__ import annotations
 
-from pathlib import Path
-from typing import Any, Dict, Optional
+from typing import Any
 
 from loggem.core.config import get_settings
 from loggem.core.logging import get_audit_logger, get_logger
@@ -27,7 +26,7 @@ class ModelManager:
     def __init__(
         self,
         provider_type: str | None = None,
-        provider_config: Dict[str, Any] | None = None,
+        provider_config: dict[str, Any] | None = None,
     ) -> None:
         """
         Initialize model manager.
@@ -44,50 +43,56 @@ class ModelManager:
         # Build provider config from settings
         if provider_config is None:
             provider_config = self._build_provider_config()
-        
+
         self.provider_config = provider_config
 
         # Create provider instance
-        self.provider: Optional[LLMProvider] = None
+        self.provider: LLMProvider | None = None
 
         logger.info(
             "model_manager_initialized",
             provider=self.provider_type,
             config=self._sanitize_config(provider_config),
         )
-    
-    def _build_provider_config(self) -> Dict[str, Any]:
+
+    def _build_provider_config(self) -> dict[str, Any]:
         """Build provider configuration from settings."""
-        config: Dict[str, Any] = {
+        config: dict[str, Any] = {
             "model_name": self.settings.model.name,
             "max_length": self.settings.model.max_length,
         }
 
         if self.provider_type == "huggingface":
-            config.update({
-                "device": self.settings.model.device,
-                "cache_dir": str(self.settings.model.cache_dir),
-                "quantization": self.settings.model.quantization,
-                "trust_remote_code": self.settings.model.trust_remote_code,
-            })
+            config.update(
+                {
+                    "device": self.settings.model.device,
+                    "cache_dir": str(self.settings.model.cache_dir),
+                    "quantization": self.settings.model.quantization,
+                    "trust_remote_code": self.settings.model.trust_remote_code,
+                }
+            )
         elif self.provider_type in ("openai", "anthropic"):
-            config.update({
-                "api_key": self.settings.model.api_key,
-                "model": self.settings.model.name,
-            })
+            config.update(
+                {
+                    "api_key": self.settings.model.api_key,
+                    "model": self.settings.model.name,
+                }
+            )
             if self.settings.model.base_url:
                 config["base_url"] = self.settings.model.base_url
             if self.provider_type == "openai" and self.settings.model.organization:
                 config["organization"] = self.settings.model.organization
         elif self.provider_type == "ollama":
-            config.update({
-                "model": self.settings.model.name,
-                "base_url": self.settings.model.base_url or "http://localhost:11434",
-            })
+            config.update(
+                {
+                    "model": self.settings.model.name,
+                    "base_url": self.settings.model.base_url or "http://localhost:11434",
+                }
+            )
 
         return config
 
-    def _sanitize_config(self, config: Dict[str, Any]) -> Dict[str, Any]:
+    def _sanitize_config(self, config: dict[str, Any]) -> dict[str, Any]:
         """Sanitize config for logging (remove sensitive data)."""
         sanitized = config.copy()
         if "api_key" in sanitized:
@@ -114,7 +119,8 @@ class ModelManager:
 
             logger.info("provider_initialized_successfully")
             audit_logger.log_model_load(
-                self.provider_config.get("model_name") or self.provider_config.get("model", "unknown"),
+                self.provider_config.get("model_name")
+                or self.provider_config.get("model", "unknown"),
                 self.provider_type,
             )
 
@@ -179,7 +185,7 @@ class ModelManager:
         """Check if provider is initialized."""
         return self.provider is not None and self.provider.is_initialized
 
-    def get_model_info(self) -> Dict[str, Any]:
+    def get_model_info(self) -> dict[str, Any]:
         """Get information about the provider and model."""
         if self.provider is None:
             return {

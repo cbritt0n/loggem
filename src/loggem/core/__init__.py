@@ -1,7 +1,7 @@
 """Core data models and utilities for LogGem."""
 
-from loggem.core.models import LogEntry, Anomaly, Severity, AnomalyType
 from loggem.core.config import Settings, get_settings
+from loggem.core.models import Anomaly, AnomalyType, LogEntry, Severity
 
 __all__ = [
     "LogEntry",

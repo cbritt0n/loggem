@@ -155,9 +155,7 @@ class AuditLogger:
         )
         self.logger.addHandler(handler)
 
-    def log_event(
-        self, event: str, severity: str = "INFO", **kwargs: Any
-    ) -> None:
+    def log_event(self, event: str, severity: str = "INFO", **kwargs: Any) -> None:
         """
         Log an audit event.
 
@@ -194,9 +192,7 @@ class AuditLogger:
             device=device,
         )
 
-    def log_anomaly_detection(
-        self, anomaly_count: int, severity: str, source: str
-    ) -> None:
+    def log_anomaly_detection(self, anomaly_count: int, severity: str, source: str) -> None:
         """Log anomaly detection results."""
         self.log_event(
             "anomaly_detection",

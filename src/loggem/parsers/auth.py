@@ -22,38 +22,36 @@ class AuthLogParser(BaseParser):
     # Common auth log pattern
     # Oct  5 10:15:30 hostname sshd[12345]: Failed password for invalid user admin from 192.168.1.1 port 22 ssh2
     AUTH_PATTERN = re.compile(
-        r'^(?P<timestamp>\w+\s+\d+\s+\d+:\d+:\d+)\s+'
-        r'(?P<hostname>\S+)\s+'
-        r'(?P<process>\S+?)(?:\[(?P<pid>\d+)\])?:\s+'
-        r'(?P<message>.*)$'
+        r"^(?P<timestamp>\w+\s+\d+\s+\d+:\d+:\d+)\s+"
+        r"(?P<hostname>\S+)\s+"
+        r"(?P<process>\S+?)(?:\[(?P<pid>\d+)\])?:\s+"
+        r"(?P<message>.*)$"
     )
 
     # SSH-specific patterns
     SSH_PATTERNS = {
         "failed_password": re.compile(
-            r'Failed password for (invalid user )?(?P<user>\S+) from (?P<ip>[\d\.]+) port (?P<port>\d+)'
+            r"Failed password for (invalid user )?(?P<user>\S+) from (?P<ip>[\d\.]+) port (?P<port>\d+)"
         ),
         "accepted_password": re.compile(
-            r'Accepted password for (?P<user>\S+) from (?P<ip>[\d\.]+) port (?P<port>\d+)'
+            r"Accepted password for (?P<user>\S+) from (?P<ip>[\d\.]+) port (?P<port>\d+)"
         ),
         "accepted_publickey": re.compile(
-            r'Accepted publickey for (?P<user>\S+) from (?P<ip>[\d\.]+) port (?P<port>\d+)'
+            r"Accepted publickey for (?P<user>\S+) from (?P<ip>[\d\.]+) port (?P<port>\d+)"
         ),
-        "invalid_user": re.compile(
-            r'Invalid user (?P<user>\S+) from (?P<ip>[\d\.]+)'
-        ),
+        "invalid_user": re.compile(r"Invalid user (?P<user>\S+) from (?P<ip>[\d\.]+)"),
         "connection_closed": re.compile(
-            r'Connection closed by (authenticating user )?(?P<user>\S+)? ?(?P<ip>[\d\.]+) port (?P<port>\d+)'
+            r"Connection closed by (authenticating user )?(?P<user>\S+)? ?(?P<ip>[\d\.]+) port (?P<port>\d+)"
         ),
     }
 
     # Sudo patterns
     SUDO_PATTERNS = {
         "sudo_command": re.compile(
-            r'(?P<user>\S+) : TTY=(?P<tty>\S+) ; PWD=(?P<pwd>\S+) ; USER=(?P<target_user>\S+) ; COMMAND=(?P<command>.*)'
+            r"(?P<user>\S+) : TTY=(?P<tty>\S+) ; PWD=(?P<pwd>\S+) ; USER=(?P<target_user>\S+) ; COMMAND=(?P<command>.*)"
         ),
         "sudo_failed": re.compile(
-            r'(?P<user>\S+) : (?P<failure_count>\d+) incorrect password attempt'
+            r"(?P<user>\S+) : (?P<failure_count>\d+) incorrect password attempt"
         ),
     }
 
@@ -103,7 +101,9 @@ class AuthLogParser(BaseParser):
             level = "WARNING" if "failed" in message.lower() else "INFO"
             user = self._extract_user(message)
         # Check for authentication failures
-        elif any(keyword in message.lower() for keyword in ["failed", "failure", "error", "denied"]):
+        elif any(
+            keyword in message.lower() for keyword in ["failed", "failure", "error", "denied"]
+        ):
             level = "WARNING"
             user = self._extract_user(message)
             host = self._extract_ip(message)

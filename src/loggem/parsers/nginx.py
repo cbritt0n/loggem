@@ -21,12 +21,12 @@ class NginxParser(BaseParser):
     # Nginx combined log format:
     # $remote_addr - $remote_user [$time_local] "$request" $status $body_bytes_sent "$http_referer" "$http_user_agent"
     ACCESS_LOG_PATTERN = re.compile(
-        r'^(?P<remote_addr>[\d\.]+)\s+-\s+'
-        r'(?P<remote_user>\S+)\s+'
-        r'\[(?P<time_local>[^\]]+)\]\s+'
+        r"^(?P<remote_addr>[\d\.]+)\s+-\s+"
+        r"(?P<remote_user>\S+)\s+"
+        r"\[(?P<time_local>[^\]]+)\]\s+"
         r'"(?P<request>[^"]*)"\s+'
-        r'(?P<status>\d{3})\s+'
-        r'(?P<body_bytes_sent>\d+)\s+'
+        r"(?P<status>\d{3})\s+"
+        r"(?P<body_bytes_sent>\d+)\s+"
         r'"(?P<http_referer>[^"]*)"\s+'
         r'"(?P<http_user_agent>[^"]*)"'
     )
@@ -34,11 +34,11 @@ class NginxParser(BaseParser):
     # Nginx error log format:
     # 2023/10/05 10:15:30 [level] pid#tid: *connection_id message
     ERROR_LOG_PATTERN = re.compile(
-        r'^(?P<timestamp>\d{4}/\d{2}/\d{2}\s+\d{2}:\d{2}:\d{2})\s+'
-        r'\[(?P<level>\w+)\]\s+'
-        r'(?P<pid>\d+)#(?P<tid>\d+):\s+'
-        r'(?:\*(?P<connection_id>\d+)\s+)?'
-        r'(?P<message>.*)$'
+        r"^(?P<timestamp>\d{4}/\d{2}/\d{2}\s+\d{2}:\d{2}:\d{2})\s+"
+        r"\[(?P<level>\w+)\]\s+"
+        r"(?P<pid>\d+)#(?P<tid>\d+):\s+"
+        r"(?:\*(?P<connection_id>\d+)\s+)?"
+        r"(?P<message>.*)$"
     )
 
     def parse_line(self, line: str, line_number: int = 0) -> LogEntry | None:
@@ -184,9 +184,8 @@ class NginxParser(BaseParser):
         parts = request.split()
         if len(parts) >= 3:
             return parts[0], parts[1], parts[2]
-        elif len(parts) == 2:
+        if len(parts) == 2:
             return parts[0], parts[1], "HTTP/1.0"
-        elif len(parts) == 1:
+        if len(parts) == 1:
             return "GET", parts[0], "HTTP/1.0"
-        else:
-            return "UNKNOWN", "/", "HTTP/1.0"
+        return "UNKNOWN", "/", "HTTP/1.0"

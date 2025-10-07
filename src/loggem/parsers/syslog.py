@@ -8,7 +8,7 @@ import re
 from datetime import datetime
 
 from loggem.core.models import LogEntry
-from loggem.parsers.base import BaseParser, ParserError
+from loggem.parsers.base import BaseParser
 
 
 class SyslogParser(BaseParser):
@@ -42,16 +42,37 @@ class SyslogParser(BaseParser):
 
     # Syslog facilities and severities
     FACILITIES = {
-        0: "kern", 1: "user", 2: "mail", 3: "daemon",
-        4: "auth", 5: "syslog", 6: "lpr", 7: "news",
-        8: "uucp", 9: "cron", 10: "authpriv", 11: "ftp",
-        16: "local0", 17: "local1", 18: "local2", 19: "local3",
-        20: "local4", 21: "local5", 22: "local6", 23: "local7",
+        0: "kern",
+        1: "user",
+        2: "mail",
+        3: "daemon",
+        4: "auth",
+        5: "syslog",
+        6: "lpr",
+        7: "news",
+        8: "uucp",
+        9: "cron",
+        10: "authpriv",
+        11: "ftp",
+        16: "local0",
+        17: "local1",
+        18: "local2",
+        19: "local3",
+        20: "local4",
+        21: "local5",
+        22: "local6",
+        23: "local7",
     }
 
     SEVERITIES = {
-        0: "EMERGENCY", 1: "ALERT", 2: "CRITICAL", 3: "ERROR",
-        4: "WARNING", 5: "NOTICE", 6: "INFO", 7: "DEBUG",
+        0: "EMERGENCY",
+        1: "ALERT",
+        2: "CRITICAL",
+        3: "ERROR",
+        4: "WARNING",
+        5: "NOTICE",
+        6: "INFO",
+        7: "DEBUG",
     }
 
     def parse_line(self, line: str, line_number: int = 0) -> LogEntry | None:

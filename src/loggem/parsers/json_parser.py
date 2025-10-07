@@ -8,7 +8,7 @@ import json
 from datetime import datetime
 
 from loggem.core.models import LogEntry
-from loggem.parsers.base import BaseParser, ParserError
+from loggem.parsers.base import BaseParser
 
 
 class JSONParser(BaseParser):
@@ -113,7 +113,7 @@ class JSONParser(BaseParser):
         for field in self.TIMESTAMP_FIELDS:
             if field in data:
                 value = data[field]
-                
+
                 # Handle numeric timestamps (Unix epoch)
                 if isinstance(value, (int, float)):
                     try:
@@ -123,7 +123,7 @@ class JSONParser(BaseParser):
                         return datetime.fromtimestamp(value)
                     except (ValueError, OSError):
                         continue
-                
+
                 # Handle string timestamps
                 if isinstance(value, str):
                     parsed = self._parse_timestamp(

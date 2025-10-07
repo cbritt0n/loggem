@@ -1,7 +1,6 @@
 """Tests for Windows Event Log parser"""
 
 import pytest
-from datetime import datetime
 
 from loggem.parsers.windows_event import WindowsEventLogParser
 
@@ -28,16 +27,16 @@ def test_xml_event_parsing(parser):
         <Data Name='TargetUserName'>USER01</Data>
     </EventData>
 </Event>"""
-    
+
     entry = parser.parse_line(xml_event)
-    
+
     assert entry is not None
-    assert entry.metadata['event_id'] == '4624'
-    assert entry.metadata['level'] == 'LogAlways'
-    assert entry.metadata['computer'] == 'SERVER01'
-    assert entry.metadata['channel'] == 'Security'
-    assert 'SubjectUserName' in entry.metadata['event_data']
-    assert entry.metadata['log_type'] == 'windows_event'
+    assert entry.metadata["event_id"] == "4624"
+    assert entry.metadata["level"] == "LogAlways"
+    assert entry.metadata["computer"] == "SERVER01"
+    assert entry.metadata["channel"] == "Security"
+    assert "SubjectUserName" in entry.metadata["event_data"]
+    assert entry.metadata["log_type"] == "windows_event"
 
 
 def test_text_event_parsing(parser):
@@ -52,46 +51,46 @@ Keywords: Audit Success
 User: N/A
 Computer: SERVER01
 Description: An account was successfully logged on."""
-    
+
     entry = parser.parse_line(text_event)
-    
+
     assert entry is not None
-    assert entry.metadata['event_id'] == '4624'
-    assert entry.metadata['level'] == 'Information'
-    assert entry.metadata['computer'] == 'SERVER01'
-    assert entry.metadata['channel'] == 'Security'
-    assert entry.metadata['log_type'] == 'windows_event'
+    assert entry.metadata["event_id"] == "4624"
+    assert entry.metadata["level"] == "Information"
+    assert entry.metadata["computer"] == "SERVER01"
+    assert entry.metadata["channel"] == "Security"
+    assert entry.metadata["log_type"] == "windows_event"
 
 
 def test_security_event_description(parser):
     """Test security event descriptions"""
-    desc = parser._get_event_description(4624, 'Security')
-    assert desc == 'Account Logon'
-    
-    desc = parser._get_event_description(4625, 'Security')
-    assert desc == 'Account Logon Failed'
+    desc = parser._get_event_description(4624, "Security")
+    assert desc == "Account Logon"
+
+    desc = parser._get_event_description(4625, "Security")
+    assert desc == "Account Logon Failed"
 
 
 def test_system_event_description(parser):
     """Test system event descriptions"""
-    desc = parser._get_event_description(6005, 'System')
-    assert desc == 'Event Log Service Started'
-    
-    desc = parser._get_event_description(7034, 'System')
-    assert desc == 'Service Crashed Unexpectedly'
+    desc = parser._get_event_description(6005, "System")
+    assert desc == "Event Log Service Started"
+
+    desc = parser._get_event_description(7034, "System")
+    assert desc == "Service Crashed Unexpectedly"
 
 
 def test_validation(parser):
     """Test event validation"""
     # XML format
     assert parser.validate('<Event xmlns="http://schemas.microsoft.com">') is True
-    
+
     # Text format
-    assert parser.validate('Event ID: 1234\nLog Name: Application') is True
-    
+    assert parser.validate("Event ID: 1234\nLog Name: Application") is True
+
     # Invalid
-    assert parser.validate('Just a regular log line') is False
-    assert parser.validate('') is False
+    assert parser.validate("Just a regular log line") is False
+    assert parser.validate("") is False
 
 
 def test_invalid_xml(parser):
@@ -108,7 +107,7 @@ def test_minimal_xml_event(parser):
         <EventID>1000</EventID>
     </System>
 </Event>"""
-    
+
     entry = parser.parse_line(minimal)
     # Parser returns None for invalid events missing timestamp
     # This is expected behavior - events without timestamp are invalid
@@ -117,14 +116,14 @@ def test_minimal_xml_event(parser):
 
 def test_application_event_description(parser):
     """Test application event descriptions"""
-    desc = parser._get_event_description(1000, 'Application')
-    assert desc == 'Application Error'
-    
-    desc = parser._get_event_description(1026, 'Application')
-    assert desc == '.NET Runtime Error'
+    desc = parser._get_event_description(1000, "Application")
+    assert desc == "Application Error"
+
+    desc = parser._get_event_description(1026, "Application")
+    assert desc == ".NET Runtime Error"
 
 
 def test_unknown_event_id(parser):
     """Test handling of unknown event IDs"""
-    desc = parser._get_event_description(99999, 'Security')
+    desc = parser._get_event_description(99999, "Security")
     assert desc is None

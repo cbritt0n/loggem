@@ -7,9 +7,7 @@ Provides commands for analyzing logs, watching files, and managing the system.
 from __future__ import annotations
 
 import json
-import sys
 from pathlib import Path
-from typing import Optional
 
 import typer
 from rich.console import Console
@@ -21,7 +19,7 @@ from loggem import __version__
 from loggem.analyzer import LogAnalyzer
 from loggem.analyzer.pattern_detector import PatternDetector
 from loggem.core.config import get_settings
-from loggem.core.logging import setup_logging, get_logger
+from loggem.core.logging import get_logger, setup_logging
 from loggem.core.models import AnalysisResult, Severity
 from loggem.detector import AnomalyDetector
 from loggem.parsers import LogParserFactory
@@ -37,21 +35,17 @@ console = Console()
 @app.command()
 def analyze(
     files: list[Path] = typer.Argument(..., help="Log files to analyze"),
-    format: Optional[str] = typer.Option(
+    format: str | None = typer.Option(
         None, "--format", "-f", help="Log format (syslog, json, nginx, auth)"
     ),
-    output: Optional[Path] = typer.Option(
+    output: Path | None = typer.Option(
         None, "--output", "-o", help="Output file for results (JSON)"
     ),
-    model: Optional[str] = typer.Option(
-        None, "--model", "-m", help="Model to use for detection"
-    ),
-    sensitivity: Optional[float] = typer.Option(
+    model: str | None = typer.Option(None, "--model", "-m", help="Model to use for detection"),
+    sensitivity: float | None = typer.Option(
         None, "--sensitivity", "-s", min=0.0, max=1.0, help="Detection sensitivity (0.0-1.0)"
     ),
-    no_ai: bool = typer.Option(
-        False, "--no-ai", help="Disable AI detection (use only rule-based)"
-    ),
+    no_ai: bool = typer.Option(False, "--no-ai", help="Disable AI detection (use only rule-based)"),
     verbose: bool = typer.Option(False, "--verbose", "-v", help="Verbose output"),
 ) -> None:
     """
@@ -86,9 +80,7 @@ def analyze(
 
         for file_path in files:
             try:
-                parser = LogParserFactory.create_parser(
-                    format_type=format, file_path=file_path
-                )
+                parser = LogParserFactory.create_parser(format_type=format, file_path=file_path)
                 entries = list(parser.parse_file(file_path))
                 all_entries.extend(entries)
                 logger.info("parsed_file", path=str(file_path), entries=len(entries))
@@ -118,7 +110,7 @@ def analyze(
             ) as progress:
                 progress.add_task("Loading AI model...", total=None)
                 detector = AnomalyDetector(model_name=model, sensitivity=sensitivity)
-                
+
                 progress.add_task("Analyzing with AI...", total=None)
                 ai_anomalies = detector.detect_batch(all_entries)
                 detector.cleanup()
@@ -154,13 +146,11 @@ def analyze(
 @app.command()
 def watch(
     file: Path = typer.Argument(..., help="Log file to watch"),
-    format: Optional[str] = typer.Option(
+    format: str | None = typer.Option(
         None, "--format", "-f", help="Log format (syslog, json, nginx, auth)"
     ),
-    model: Optional[str] = typer.Option(
-        None, "--model", "-m", help="Model to use for detection"
-    ),
-    sensitivity: Optional[float] = typer.Option(
+    model: str | None = typer.Option(None, "--model", "-m", help="Model to use for detection"),
+    sensitivity: float | None = typer.Option(
         None, "--sensitivity", "-s", min=0.0, max=1.0, help="Detection sensitivity (0.0-1.0)"
     ),
 ) -> None:

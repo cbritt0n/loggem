@@ -5,16 +5,15 @@ Factory for creating log parsers based on format type.
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Type
 
+from loggem.core.logging import get_logger
+from loggem.parsers.apache import ApacheLogParser
+from loggem.parsers.auth import AuthLogParser
 from loggem.parsers.base import BaseParser
-from loggem.parsers.syslog import SyslogParser
 from loggem.parsers.json_parser import JSONParser
 from loggem.parsers.nginx import NginxParser
-from loggem.parsers.auth import AuthLogParser
-from loggem.parsers.apache import ApacheLogParser
+from loggem.parsers.syslog import SyslogParser
 from loggem.parsers.windows_event import WindowsEventLogParser
-from loggem.core.logging import get_logger
 
 logger = get_logger(__name__)
 
@@ -27,7 +26,7 @@ class LogParserFactory:
     """
 
     # Registry of available parsers
-    _parsers: dict[str, Type[BaseParser]] = {
+    _parsers: dict[str, type[BaseParser]] = {
         "syslog": SyslogParser,
         "json": JSONParser,
         "nginx": NginxParser,
@@ -46,7 +45,7 @@ class LogParserFactory:
     }
 
     @classmethod
-    def register_parser(cls, name: str, parser_class: Type[BaseParser]) -> None:
+    def register_parser(cls, name: str, parser_class: type[BaseParser]) -> None:
         """
         Register a custom parser.
 
@@ -83,10 +82,7 @@ class LogParserFactory:
         """
         # Determine source name
         if source_name is None:
-            if file_path:
-                source_name = str(file_path)
-            else:
-                source_name = "unknown"
+            source_name = str(file_path) if file_path else "unknown"
 
         # If format explicitly specified, use it
         if format_type:
@@ -145,7 +141,7 @@ class LogParserFactory:
         # Try to detect from first few lines
         if file_path.exists() and file_path.is_file():
             try:
-                with open(file_path, "r", encoding="utf-8", errors="replace") as f:
+                with open(file_path, encoding="utf-8", errors="replace") as f:
                     # Read first few non-empty lines
                     lines = []
                     for line in f:
@@ -188,10 +184,7 @@ class LogParserFactory:
 
         # Check for auth log keywords
         auth_keywords = ["sshd", "sudo", "su:", "authentication", "login"]
-        if any(
-            any(keyword in line.lower() for keyword in auth_keywords)
-            for line in lines[:3]
-        ):
+        if any(any(keyword in line.lower() for keyword in auth_keywords) for line in lines[:3]):
             return "auth"
 
         # Default to syslog (most common format)

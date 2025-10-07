@@ -8,13 +8,13 @@ from __future__ import annotations
 
 import re
 from abc import ABC, abstractmethod
+from collections.abc import Iterator
 from datetime import datetime
 from pathlib import Path
-from typing import Iterator
 
+from loggem.core.config import get_settings
 from loggem.core.logging import get_logger
 from loggem.core.models import LogEntry
-from loggem.core.config import get_settings
 
 logger = get_logger(__name__)
 
@@ -82,14 +82,13 @@ class BaseParser(ABC):
         file_size = file_path.stat().st_size
         if file_size > self.settings.security.max_file_size:
             raise ParserError(
-                f"File too large: {file_size} bytes "
-                f"(max: {self.settings.security.max_file_size})"
+                f"File too large: {file_size} bytes (max: {self.settings.security.max_file_size})"
             )
 
         self.logger.info("parsing_file", path=str(file_path), size=file_size)
 
         try:
-            with open(file_path, "r", encoding="utf-8", errors="replace") as f:
+            with open(file_path, encoding="utf-8", errors="replace") as f:
                 for line_number, line in enumerate(f, start=1):
                     # Skip empty lines
                     if not line.strip():

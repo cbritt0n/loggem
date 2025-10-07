@@ -9,7 +9,6 @@ import tempfile
 from pathlib import Path
 
 import pytest
-import yaml
 
 from loggem.core.config import (
     AlertingConfig,
@@ -76,11 +75,11 @@ class TestModelConfig:
         # Too small
         with pytest.raises(Exception):
             ModelConfig(max_length=50)
-        
+
         # Too large
         with pytest.raises(Exception):
             ModelConfig(max_length=10000)
-        
+
         # Valid
         config = ModelConfig(max_length=1024)
         assert config.max_length == 1024
@@ -114,15 +113,15 @@ class TestDetectionConfig:
         # Too low
         with pytest.raises(Exception):
             DetectionConfig(sensitivity=-0.1)
-        
+
         # Too high
         with pytest.raises(Exception):
             DetectionConfig(sensitivity=1.5)
-        
+
         # Valid bounds
         config = DetectionConfig(sensitivity=0.0)
         assert config.sensitivity == 0.0
-        
+
         config = DetectionConfig(sensitivity=1.0)
         assert config.sensitivity == 1.0
 
@@ -131,11 +130,11 @@ class TestDetectionConfig:
         # Too small
         with pytest.raises(Exception):
             DetectionConfig(batch_size=0)
-        
+
         # Too large
         with pytest.raises(Exception):
             DetectionConfig(batch_size=1000)
-        
+
         # Valid
         config = DetectionConfig(batch_size=16)
         assert config.batch_size == 16
@@ -276,12 +275,12 @@ class TestSettings:
 model:
   provider: anthropic
   name: claude-3-haiku-20240307
-  
+
 detection:
   sensitivity: 0.8
   batch_size: 16
 """
-        with tempfile.NamedTemporaryFile(mode='w', suffix='.yaml', delete=False) as f:
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".yaml", delete=False) as f:
             f.write(yaml_content)
             f.flush()
             yaml_path = Path(f.name)
@@ -317,7 +316,7 @@ detection:
         """Test environment variable override."""
         os.environ["LOGGEM_MODEL__PROVIDER"] = "openai"
         os.environ["LOGGEM_MODEL__NAME"] = "gpt-4o"
-        
+
         try:
             reset_settings()
             settings = get_settings()
@@ -333,12 +332,12 @@ detection:
         with tempfile.TemporaryDirectory() as tmpdir:
             data_dir = Path(tmpdir) / "data"
             temp_dir = Path(tmpdir) / "temp"
-            
-            settings = Settings(
+
+            Settings(
                 data_dir=data_dir,
                 temp_dir=temp_dir,
             )
-            
+
             assert data_dir.exists()
             assert temp_dir.exists()
 
@@ -347,11 +346,11 @@ detection:
         # Too small
         with pytest.raises(Exception):
             Settings(max_workers=0)
-        
+
         # Too large
         with pytest.raises(Exception):
             Settings(max_workers=100)
-        
+
         # Valid
         settings = Settings(max_workers=8)
         assert settings.max_workers == 8

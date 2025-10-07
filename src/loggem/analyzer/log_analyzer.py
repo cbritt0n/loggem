@@ -8,11 +8,10 @@ from __future__ import annotations
 
 import time
 from collections import Counter, defaultdict
-from datetime import datetime, timedelta
 from typing import Any
 
 from loggem.core.logging import get_logger
-from loggem.core.models import Anomaly, AnalysisResult, LogEntry, AnomalyType, Severity
+from loggem.core.models import AnalysisResult, Anomaly, LogEntry
 
 logger = get_logger(__name__)
 
@@ -156,7 +155,9 @@ class LogAnalyzer:
         # Time range
         if len(entries) > 1:
             sorted_entries = sorted(entries, key=lambda e: e.timestamp)
-            time_range = (sorted_entries[-1].timestamp - sorted_entries[0].timestamp).total_seconds()
+            time_range = (
+                sorted_entries[-1].timestamp - sorted_entries[0].timestamp
+            ).total_seconds()
             patterns["time_range_seconds"] = int(time_range)
 
         return patterns
