@@ -84,7 +84,7 @@ Respond ONLY with the JSON object, no additional text."""
             self.model_manager.load_model()
             self._model_loaded = True
 
-    def detect(self, entry: LogEntry, context: list[LogEntry] | None = None) -> Anomaly | None:
+    def detect(self, entry: LogEntry, context: Optional[list[LogEntry]] = None) -> Optional[Anomaly]:
         """
         Detect anomalies in a single log entry.
 
@@ -170,7 +170,7 @@ Respond ONLY with the JSON object, no additional text."""
 
         return anomalies
 
-    def _build_prompt(self, entry: LogEntry, context: list[LogEntry] | None = None) -> str:
+    def _build_prompt(self, entry: LogEntry, context: Optional[list[LogEntry]] = None) -> str:
         """
         Build prompt for the model.
 
@@ -219,7 +219,7 @@ Respond ONLY with the JSON object, no additional text."""
 
         return "".join(prompt_parts)
 
-    def _parse_response(self, response: str, entry: LogEntry) -> Anomaly | None:
+    def _parse_response(self, response: str, entry: LogEntry) -> Optional[Anomaly]:
         """
         Parse model response into Anomaly object.
 

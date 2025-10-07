@@ -1,3 +1,4 @@
+from typing import Optional
 """MySQL database log parser."""
 
 import re
@@ -31,7 +32,7 @@ class MySQLParser(BaseParser):
         r"# Time: (?P<timestamp>\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{6}Z)"
     )
 
-    def parse_line(self, line: str, line_number: int = 0) -> LogEntry | None:
+    def parse_line(self, line: str, line_number: int = 0) -> Optional[LogEntry]:
         """
         Parse a single MySQL log line.
 

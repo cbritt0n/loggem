@@ -3,6 +3,7 @@ Syslog parser supporting RFC 3164 and RFC 5424 formats.
 """
 
 from __future__ import annotations
+from typing import Optional
 
 import re
 from datetime import datetime
@@ -75,7 +76,7 @@ class SyslogParser(BaseParser):
         7: "DEBUG",
     }
 
-    def parse_line(self, line: str, line_number: int = 0) -> LogEntry | None:
+    def parse_line(self, line: str, line_number: int = 0) -> Optional[LogEntry]:
         """
         Parse a single syslog line.
 
@@ -106,7 +107,7 @@ class SyslogParser(BaseParser):
             raw=line,
         )
 
-    def _parse_rfc3164(self, line: str) -> LogEntry | None:
+    def _parse_rfc3164(self, line: str) -> Optional[LogEntry]:
         """Parse RFC 3164 format syslog."""
         match = self.RFC3164_PATTERN.match(line)
         if not match:
@@ -150,7 +151,7 @@ class SyslogParser(BaseParser):
             raw=line,
         )
 
-    def _parse_rfc5424(self, line: str) -> LogEntry | None:
+    def _parse_rfc5424(self, line: str) -> Optional[LogEntry]:
         """Parse RFC 5424 format syslog."""
         match = self.RFC5424_PATTERN.match(line)
         if not match:

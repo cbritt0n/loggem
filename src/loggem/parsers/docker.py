@@ -2,6 +2,7 @@
 
 import re
 from datetime import datetime
+from typing import Optional
 
 from .base import BaseParser, LogEntry
 
@@ -27,7 +28,7 @@ class DockerParser(BaseParser):
         r"(?P<message>.*)"
     )
 
-    def parse_line(self, line: str, line_number: int = 0) -> LogEntry | None:
+    def parse_line(self, line: str, line_number: int = 0) -> Optional[LogEntry]:
         """
         Parse a single Docker log line.
 

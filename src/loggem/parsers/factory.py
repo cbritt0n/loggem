@@ -135,7 +135,7 @@ class LogParserFactory:
         return SyslogParser(source_name=source_name)
 
     @classmethod
-    def _detect_format(cls, file_path: Path) -> str | None:
+    def _detect_format(cls, file_path: Path) -> Optional[str]:
         """
         Attempt to detect log format from file path.
 
@@ -177,7 +177,7 @@ class LogParserFactory:
         return None
 
     @classmethod
-    def _detect_format_from_content(cls, lines: list[str]) -> str | None:
+    def _detect_format_from_content(cls, lines: list[str]) -> Optional[str]:
         """
         Detect format from log content.
 

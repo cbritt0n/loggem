@@ -3,6 +3,7 @@ Authentication log parser for Linux auth.log and secure logs.
 """
 
 from __future__ import annotations
+from typing import Optional
 
 import re
 from datetime import datetime
@@ -55,7 +56,7 @@ class AuthLogParser(BaseParser):
         ),
     }
 
-    def parse_line(self, line: str, line_number: int = 0) -> LogEntry | None:
+    def parse_line(self, line: str, line_number: int = 0) -> Optional[LogEntry]:
         """
         Parse a single authentication log line.
 

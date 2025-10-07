@@ -1,3 +1,4 @@
+from typing import Optional
 """Kubernetes cluster log parser."""
 
 import re
@@ -37,7 +38,7 @@ class KubernetesParser(BaseParser):
         r"(?P<message>.*)"
     )
 
-    def parse_line(self, line: str, line_number: int = 0) -> LogEntry | None:
+    def parse_line(self, line: str, line_number: int = 0) -> Optional[LogEntry]:
         """
         Parse a single Kubernetes log line.
 

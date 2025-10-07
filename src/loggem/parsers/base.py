@@ -5,6 +5,7 @@ All log parsers inherit from BaseParser and implement the parse methods.
 """
 
 from __future__ import annotations
+from typing import Optional
 
 import re
 from abc import ABC, abstractmethod
@@ -46,7 +47,7 @@ class BaseParser(ABC):
         self.logger = logger.bind(parser=self.__class__.__name__)
 
     @abstractmethod
-    def parse_line(self, line: str, line_number: int = 0) -> LogEntry | None:
+    def parse_line(self, line: str, line_number: int = 0) -> Optional[LogEntry]:
         """
         Parse a single log line.
 
@@ -145,7 +146,7 @@ class BaseParser(ABC):
 
         return entries
 
-    def _parse_timestamp(self, timestamp_str: str, formats: list[str]) -> datetime | None:
+    def _parse_timestamp(self, timestamp_str: str, formats: list[str]) -> Optional[datetime]:
         """
         Try to parse timestamp using multiple formats.
 
@@ -173,7 +174,7 @@ class BaseParser(ABC):
 
         return None
 
-    def _extract_user(self, text: str) -> str | None:
+    def _extract_user(self, text: str) -> Optional[str]:
         """
         Extract username from text using common patterns.
 
@@ -197,7 +198,7 @@ class BaseParser(ABC):
 
         return None
 
-    def _extract_ip(self, text: str) -> str | None:
+    def _extract_ip(self, text: str) -> Optional[str]:
         """
         Extract IP address from text.
 

@@ -1,3 +1,4 @@
+from typing import Optional
 """Redis database log parser."""
 
 import re
@@ -27,7 +28,7 @@ class RedisParser(BaseParser):
     # Level mapping
     LEVEL_MAP = {"*": "INFO", "#": "WARNING", "-": "NOTICE", ".": "DEBUG"}
 
-    def parse_line(self, line: str, line_number: int = 0) -> LogEntry | None:
+    def parse_line(self, line: str, line_number: int = 0) -> Optional[LogEntry]:
         """
         Parse a single Redis log line.
 

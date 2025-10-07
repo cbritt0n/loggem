@@ -3,6 +3,7 @@ JSON log parser for structured application logs.
 """
 
 from __future__ import annotations
+from typing import Optional
 
 import json
 from datetime import datetime
@@ -48,7 +49,7 @@ class JSONParser(BaseParser):
         "priority",
     ]
 
-    def parse_line(self, line: str, line_number: int = 0) -> LogEntry | None:
+    def parse_line(self, line: str, line_number: int = 0) -> Optional[LogEntry]:
         """
         Parse a single JSON log line.
 
@@ -108,7 +109,7 @@ class JSONParser(BaseParser):
             raw=line,
         )
 
-    def _extract_timestamp(self, data: dict) -> datetime | None:
+    def _extract_timestamp(self, data: dict) -> Optional[datetime]:
         """Extract timestamp from JSON data."""
         for field in self.TIMESTAMP_FIELDS:
             if field in data:
@@ -141,7 +142,7 @@ class JSONParser(BaseParser):
 
         return None
 
-    def _extract_message(self, data: dict) -> str | None:
+    def _extract_message(self, data: dict) -> Optional[str]:
         """Extract message from JSON data."""
         for field in self.MESSAGE_FIELDS:
             if field in data:
@@ -170,7 +171,7 @@ class JSONParser(BaseParser):
                 return level_map.get(level, level)
         return "INFO"
 
-    def _extract_field(self, data: dict, possible_keys: list[str]) -> str | None:
+    def _extract_field(self, data: dict, possible_keys: list[str]) -> Optional[str]:
         """Extract a field from JSON data given possible key names."""
         for key in possible_keys:
             if key in data:

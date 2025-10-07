@@ -1,3 +1,4 @@
+from typing import Optional
 """PostgreSQL database log parser."""
 
 import re
@@ -25,7 +26,7 @@ class PostgreSQLParser(BaseParser):
         r",(?P<level>[A-Z]+),"
     )
 
-    def parse_line(self, line: str, line_number: int = 0) -> LogEntry | None:
+    def parse_line(self, line: str, line_number: int = 0) -> Optional[LogEntry]:
         """
         Parse a single PostgreSQL log line.
 
