@@ -1,0 +1,46 @@
+# Include documentation files
+include README.md
+include LICENSE
+include CHANGELOG.md
+include CONTRIBUTING.md
+include CODE_OF_CONDUCT.md
+include SECURITY.md
+
+# Include configuration examples
+include config.example.yaml
+include install.sh
+include quickstart.py
+include Makefile
+
+# Include all documentation
+recursive-include docs *.md
+
+# Include example files
+recursive-include examples *.py *.log *.xml *.json
+
+# Include type stubs
+include src/loggem/py.typed
+recursive-include src/loggem *.pyi
+
+# Exclude test files from distribution
+recursive-exclude tests *
+recursive-exclude .github *
+
+# Exclude development files
+exclude .gitignore
+exclude .gitattributes
+exclude .pre-commit-config.yaml
+exclude .coverage
+exclude coverage.xml
+recursive-exclude htmlcov *
+recursive-exclude .pytest_cache *
+recursive-exclude __pycache__ *
+recursive-exclude *.egg-info *
+
+# Exclude virtual environments and caches
+recursive-exclude venv *
+recursive-exclude .venv *
+recursive-exclude .ruff_cache *
+recursive-exclude models *
+recursive-exclude logs *
+recursive-exclude loggem_data *

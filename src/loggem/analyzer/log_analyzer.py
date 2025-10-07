@@ -8,7 +8,7 @@ from __future__ import annotations
 
 import time
 from collections import Counter, defaultdict
-from typing import Any
+from typing import Any, Optional
 
 from loggem.core.logging import get_logger
 from loggem.core.models import AnalysisResult, Anomaly, LogEntry
@@ -28,7 +28,7 @@ class LogAnalyzer:
         self.logger = logger.bind(component="log_analyzer")
 
     def analyze(
-        self, entries: list[LogEntry], anomalies: list[Anomaly] | None = None
+        self, entries: list[LogEntry], anomalies: Optional[list[Anomaly]] = None
     ) -> AnalysisResult:
         """
         Analyze a batch of log entries.

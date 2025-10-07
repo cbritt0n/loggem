@@ -204,7 +204,7 @@ class AuditLogger:
 
 
 # Global audit logger instance
-_audit_logger: AuditLogger | None = None
+_audit_logger: Optional[AuditLogger] = None
 
 
 def get_audit_logger() -> AuditLogger:

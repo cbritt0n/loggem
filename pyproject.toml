@@ -4,17 +4,18 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "loggem"
-version = "0.1.0"
-description = "AI-Assisted Log Anomaly Detector with Configurable LLM Providers (HuggingFace, OpenAI, Anthropic, Ollama)"
+version = "1.0.0"
+description = "AI-Powered Log Anomaly Detector with Enterprise Features - Supports HuggingFace, OpenAI, Anthropic, and Ollama"
 readme = "README.md"
 requires-python = ">=3.9"
 license = {text = "MIT"}
 authors = [
+    {name = "Christian Britton", email = "christian@loggem.dev"},
     {name = "LogGem Contributors"}
 ]
-keywords = ["security", "logs", "anomaly-detection", "ai", "llm", "gemma", "openai", "anthropic"]
+keywords = ["security", "logs", "anomaly-detection", "ai", "llm", "gemma", "openai", "anthropic", "siem", "monitoring"]
 classifiers = [
-    "Development Status :: 4 - Beta",
+    "Development Status :: 5 - Production/Stable",
     "Intended Audience :: System Administrators",
     "Intended Audience :: Information Technology",
     "License :: OSI Approved :: MIT License",

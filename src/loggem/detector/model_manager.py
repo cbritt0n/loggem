@@ -26,7 +26,7 @@ class ModelManager:
     def __init__(
         self,
         provider_type: Optional[str] = None,
-        provider_config: dict[str, Any] | None = None,
+        provider_config: Optional[dict[str, Any]] = None,
     ) -> None:
         """
         Initialize model manager.
@@ -47,7 +47,7 @@ class ModelManager:
         self.provider_config = provider_config
 
         # Create provider instance
-        self.provider: LLMProvider | None = None
+        self.provider: Optional[LLMProvider] = None
 
         logger.info(
             "model_manager_initialized",

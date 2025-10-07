@@ -5,8 +5,8 @@ A lightweight, modular, open-source tool for detecting anomalies in logs using
 configurable LLM providers (HuggingFace, OpenAI, Anthropic, Ollama).
 """
 
-__version__ = "0.1.0"
-__author__ = "LogGem Contributors"
+__version__ = "1.0.0"
+__author__ = "Christian Britton"
 __license__ = "MIT"
 
 from loggem.analyzer.log_analyzer import LogAnalyzer

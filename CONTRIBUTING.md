@@ -1,6 +1,6 @@
 # Contributing to LogGem
 
-Thank you for your interest in contributing to LogGem! This document provides guidelines for contributing to the project.
+Thank you for your interest in contributing to LogGem! I've put together these guidelines to help you contribute to the project.
 
 ## Getting Started
 
@@ -15,7 +15,7 @@ Thank you for your interest in contributing to LogGem! This document provides gu
 
 ### Code Style
 
-We use the following tools to maintain code quality:
+I use the following tools to maintain code quality:
 
 - **Black**: Code formatting (100 character line length)
 - **Ruff**: Linting and code analysis
@@ -35,7 +35,7 @@ mypy src/
 
 ### Testing
 
-LogGem has 142 passing tests with 56% code coverage. Write tests for all contributions:
+LogGem has 142 passing tests with 56% code coverage. I ask that you write tests for all contributions:
 
 ```bash
 # Run all tests
@@ -186,7 +186,7 @@ To add rule-based detection patterns:
 
 ## Code of Conduct
 
-Be respectful and professional. We're all here to make LogGem better!
+Be respectful and professional. I want everyone to feel welcome here as we work together to make LogGem better!
 
 ## License
 
@@ -194,4 +194,4 @@ By contributing, you agree that your contributions will be licensed under the MI
 
 ---
 
-Thank you for contributing to LogGem! 🙏
+Thank you for contributing to LogGem! I appreciate your help! 🙏

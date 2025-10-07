@@ -1,6 +1,6 @@
 # LogGem Architecture
 
-Complete overview of the LogGem architecture and design patterns.
+Here's a complete overview of the LogGem architecture and design patterns I've implemented.
 
 ## Directory Structure
 
@@ -114,7 +114,7 @@ loggem/
 
 ### Core (`src/loggem/core/`)
 
-**Purpose**: Foundation of LogGem with data models, configuration, and logging.
+**Purpose**: This is the foundation of LogGem with data models, configuration, and logging.
 
 **Files**:
 - `models.py`: Defines `LogEntry`, `Anomaly`, `AnalysisResult`, and enums
@@ -133,7 +133,7 @@ loggem/
 
 ### Parsers (`src/loggem/parsers/`)
 
-**Purpose**: Convert various log formats into standardized LogEntry objects.
+**Purpose**: I've built these parsers to convert various log formats into standardized LogEntry objects.
 
 **Files**:
 - `base.py`: Abstract base class for all parsers
@@ -160,7 +160,7 @@ loggem/
 
 ### Detector (`src/loggem/detector/`)
 
-**Purpose**: AI-powered anomaly detection with pluggable LLM providers.
+**Purpose**: This module provides AI-powered anomaly detection with pluggable LLM providers.
 
 **Files**:
 - `llm_provider.py`: Abstract LLM provider interface and implementations
@@ -194,7 +194,7 @@ loggem/
 
 ### Analyzer (`src/loggem/analyzer/`)
 
-**Purpose**: Statistical analysis and rule-based pattern detection.
+**Purpose**: I've implemented statistical analysis and rule-based pattern detection here.
 
 - `log_analyzer.py`: Generates statistics and insights
 - `pattern_detector.py`: Rule-based anomaly detection

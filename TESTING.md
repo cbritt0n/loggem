@@ -1,6 +1,6 @@
 # LogGem Testing Guide
 
-Complete guide to testing LogGem, understanding test coverage, and contributing tests.
+Here's my complete guide to testing LogGem, understanding test coverage, and contributing tests.
 
 ## Test Status
 
@@ -371,6 +371,8 @@ class TestClassName:
 
 ### Test Best Practices
 
+Here are the testing practices I follow:
+
 1. **Descriptive Names**: Use clear, descriptive test names
    ```python
    # Good
@@ -484,6 +486,8 @@ Configuration in `.pre-commit-config.yaml`:
 
 ### Adding New Tests
 
+I'd love your help adding more tests! Here's how:
+
 1. **Identify untested code**:
    ```bash
    pytest tests/ --cov=loggem --cov-report=term-missing
@@ -508,7 +512,7 @@ Configuration in `.pre-commit-config.yaml`:
 
 ### Priority Areas for Testing
 
-Based on current coverage, these areas need tests:
+Based on current coverage, these are the areas where I could use help:
 
 1. **CLI** (0% coverage) - Priority: HIGH
    - Command-line interface

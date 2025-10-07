@@ -7,7 +7,7 @@ Supports multiple LLM backends including HuggingFace, OpenAI, Anthropic, and cus
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from typing import Any
+from typing import Any, Optional
 
 from loggem.core.logging import get_logger
 
@@ -91,8 +91,8 @@ class HuggingFaceProvider(LLMProvider):
         self.cache_dir = config.get("cache_dir", "./models")
         self.trust_remote_code = config.get("trust_remote_code", False)
 
-        self.model: Any | None = None
-        self.tokenizer: Any | None = None
+        self.model: Optional[Any] = None
+        self.tokenizer: Optional[Any] = None
 
     def initialize(self) -> None:
         """Load the HuggingFace model and tokenizer."""
@@ -260,7 +260,7 @@ class OpenAIProvider(LLMProvider):
         self.model = config.get("model", "gpt-4o-mini")
         self.base_url = config.get("base_url")
         self.organization = config.get("organization")
-        self.client: Any | None = None
+        self.client: Optional[Any] = None
 
     def initialize(self) -> None:
         """Initialize OpenAI client."""
@@ -336,7 +336,7 @@ class AnthropicProvider(LLMProvider):
         super().__init__(config)
         self.api_key = config.get("api_key")
         self.model = config.get("model", "claude-3-haiku-20240307")
-        self.client: Any | None = None
+        self.client: Optional[Any] = None
 
     def initialize(self) -> None:
         """Initialize Anthropic client."""
@@ -412,7 +412,7 @@ class OllamaProvider(LLMProvider):
             raise ValueError("model is required for Ollama provider")
 
         self.base_url = config.get("base_url", "http://localhost:11434")
-        self.client: Any | None = None
+        self.client: Optional[Any] = None
 
     def initialize(self) -> None:
         """Initialize Ollama client."""

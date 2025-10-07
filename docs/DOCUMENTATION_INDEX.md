@@ -1,6 +1,6 @@
 # LogGem Documentation Index
 
-Complete guide to all LogGem documentation.
+Here's my complete guide to all LogGem documentation.
 
 ## 📚 Core Documentation
 
@@ -147,7 +147,7 @@ Complete guide to all LogGem documentation.
 
 ## 📖 Quick Reference
 
-### Documentation by Use Case
+### Here's where to find what you need
 
 #### I want to...
 
@@ -229,6 +229,6 @@ loggem/
 
 ---
 
-**All documentation is GitHub-ready and follows best practices.**
+**I've made sure all documentation is GitHub-ready and follows best practices.**
 
-*Made with 💎 for the LogGem community*
+*Made with 💎 by Christian Britton for the LogGem community*
