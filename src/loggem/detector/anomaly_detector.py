@@ -84,7 +84,9 @@ Respond ONLY with the JSON object, no additional text."""
             self.model_manager.load_model()
             self._model_loaded = True
 
-    def detect(self, entry: LogEntry, context: Optional[list[LogEntry]] = None) -> Optional[Anomaly]:
+    def detect(
+        self, entry: LogEntry, context: Optional[list[LogEntry]] = None
+    ) -> Optional[Anomaly]:
         """
         Detect anomalies in a single log entry.
 
