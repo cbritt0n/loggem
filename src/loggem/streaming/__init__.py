@@ -168,7 +168,9 @@ class LogStreamer:
                         entry = self._parser.parse_line(line.strip())
                         if entry:
                             event = StreamEvent(
-                                entry=entry, timestamp=datetime.now(timezone.utc), file_path=str(self.file_path)
+                                entry=entry,
+                                timestamp=datetime.now(timezone.utc),
+                                file_path=str(self.file_path),
                             )
 
                             # Add to queue (non-blocking)

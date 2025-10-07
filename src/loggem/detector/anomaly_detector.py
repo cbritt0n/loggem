@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import json
 import re
+from typing import Optional
 
 from loggem.core.config import get_settings
 from loggem.core.logging import get_audit_logger, get_logger
@@ -52,9 +53,9 @@ Respond ONLY with the JSON object, no additional text."""
 
     def __init__(
         self,
-        model_name: str | None = None,
-        sensitivity: float | None = None,
-        min_confidence: float | None = None,
+        model_name: Optional[str] = None,
+        sensitivity: Optional[float] = None,
+        min_confidence: Optional[float] = None,
     ) -> None:
         """
         Initialize anomaly detector.

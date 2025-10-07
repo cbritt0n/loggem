@@ -7,7 +7,7 @@ Uses structlog for structured, machine-readable logs with human-friendly output.
 import logging
 import sys
 from pathlib import Path
-from typing import Any
+from typing import Any, Optional
 
 import structlog
 from structlog.types import Processor
@@ -15,7 +15,7 @@ from structlog.types import Processor
 from loggem.core.config import get_settings
 
 
-def setup_logging(log_file: Path | None = None, level: str = "INFO") -> None:
+def setup_logging(log_file: Optional[Path] = None, level: str = "INFO") -> None:
     """
     Configure structured logging for LogGem.
 
@@ -122,7 +122,7 @@ class AuditLogger:
     Provides a separate audit trail for compliance and security analysis.
     """
 
-    def __init__(self, audit_file: Path | None = None) -> None:
+    def __init__(self, audit_file: Optional[Path] = None) -> None:
         """
         Initialize audit logger.
 
@@ -173,7 +173,7 @@ class AuditLogger:
         log_method = getattr(self.logger, severity.lower(), self.logger.info)
         log_method(event, extra={"extra": extra_json})
 
-    def log_file_access(self, file_path: Path, operation: str, user: str | None = None) -> None:
+    def log_file_access(self, file_path: Path, operation: str, user: Optional[str] = None) -> None:
         """Log file access for audit purposes."""
         self.log_event(
             "file_access",

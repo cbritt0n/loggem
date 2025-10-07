@@ -34,7 +34,7 @@ LogGem detects suspicious patterns in logs using AI models that run locally or i
 
 ## 🎯 Problem Statement
 
-Security teams are overwhelmed by logs. Enterprise SIEM solutions like Splunk cost thousands per month, leaving smaller teams vulnerable. LogGem provides industrial-strength log analysis that runs anywhere - from your laptop to production servers - at zero cost.
+Security teams are overwhelmed by logs. LogGem provides industrial-strength log analysis that runs anywhere - from your laptop to production servers - at zero cost.
 
 ---
 
@@ -43,7 +43,7 @@ Security teams are overwhelmed by logs. Enterprise SIEM solutions like Splunk co
 ### Core Capabilities
 - 🤖 **AI-Powered Detection**: Leverages large language models to understand log context and identify anomalies
 - 🔌 **Pluggable LLM Providers**: HuggingFace (local), OpenAI, Anthropic, Ollama - choose what works for you
-- 📊 **Multi-Format Support**: Syslog, JSON, Nginx, Auth logs, Apache, Windows Event Logs, and custom formats
+- 📊 **12 Built-in Parsers**: Syslog, JSON, Nginx, Auth, Apache, Windows Event, PostgreSQL, MySQL, Docker, Kubernetes, HAProxy, Redis
 - 🔒 **Privacy-First**: Run completely offline with local models - your logs never leave your network
 - 🎛️ **Adjustable Sensitivity**: Fine-tune detection from permissive (fewer alerts) to strict (catch everything)
 - 🏗️ **Modular Architecture**: Use components independently or as a complete solution
@@ -53,7 +53,8 @@ Security teams are overwhelmed by logs. Enterprise SIEM solutions like Splunk co
 ### Enterprise Features
 - ⚡ **Real-Time Streaming**: Monitor log files as they grow with tail-style streaming
 - 🚨 **Advanced Alerting**: Route alerts to Slack, Email, PagerDuty, or Webhooks based on rules
-- 🪟 **Windows Event Logs**: Parse Windows Security, System, and Application logs
+- 🐳 **Container & Cloud Native**: Docker, Kubernetes, and modern infrastructure support
+- 🗄️ **Database Logs**: PostgreSQL, MySQL, Redis log analysis and security monitoring
 - 🚀 **Performance**: Batch processing and intelligent caching for high-throughput scenarios
 - 📊 **Reporting**: Export analysis results to JSON, CSV, or HTML
 
@@ -203,6 +204,12 @@ LogGem supports a wide variety of log formats out-of-the-box:
 | **Apache** | Apache access/error logs | Web server monitoring, attack detection |
 | **JSON** | Structured JSON logs | Microservices, cloud applications, modern apps |
 | **Windows Event** | Windows Security/System/Application logs | Windows security, Active Directory, system monitoring |
+| **PostgreSQL** | PostgreSQL database logs | Database security, query monitoring, error tracking |
+| **MySQL** | MySQL/MariaDB database logs | Database performance, security auditing |
+| **Docker** | Docker container logs | Container monitoring, microservices debugging |
+| **Kubernetes** | Kubernetes cluster logs | Pod monitoring, cluster events, container runtime |
+| **HAProxy** | HAProxy load balancer logs | Load balancer monitoring, traffic analysis |
+| **Redis** | Redis database logs | Cache monitoring, replication tracking |
 
 ### Auto-Detection
 
@@ -213,6 +220,12 @@ loggem analyze /var/log/mystery.log
 # Or specify explicitly
 loggem analyze /var/log/auth.log --format auth
 loggem analyze /var/log/nginx/access.log --format nginx
+loggem analyze /var/log/postgresql/postgresql-15-main.log --format postgresql
+loggem analyze /var/log/mysql/error.log --format mysql
+loggem analyze /var/log/containers/app.log --format docker
+loggem analyze kubectl-logs.txt --format kubernetes
+loggem analyze /var/log/haproxy.log --format haproxy
+loggem analyze /var/log/redis/redis-server.log --format redis
 ```
 
 ### Custom Parsers

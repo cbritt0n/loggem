@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+from typing import Optional
 
 import typer
 from rich.console import Console
@@ -35,14 +36,14 @@ console = Console()
 @app.command()
 def analyze(
     files: list[Path] = typer.Argument(..., help="Log files to analyze"),
-    format: str | None = typer.Option(
+    format: Optional[str] = typer.Option(
         None, "--format", "-f", help="Log format (syslog, json, nginx, auth)"
     ),
-    output: Path | None = typer.Option(
+    output: Optional[Path] = typer.Option(
         None, "--output", "-o", help="Output file for results (JSON)"
     ),
-    model: str | None = typer.Option(None, "--model", "-m", help="Model to use for detection"),
-    sensitivity: float | None = typer.Option(
+    model: Optional[str] = typer.Option(None, "--model", "-m", help="Model to use for detection"),
+    sensitivity: Optional[float] = typer.Option(
         None, "--sensitivity", "-s", min=0.0, max=1.0, help="Detection sensitivity (0.0-1.0)"
     ),
     no_ai: bool = typer.Option(False, "--no-ai", help="Disable AI detection (use only rule-based)"),
@@ -146,11 +147,11 @@ def analyze(
 @app.command()
 def watch(
     file: Path = typer.Argument(..., help="Log file to watch"),
-    format: str | None = typer.Option(
+    format: Optional[str] = typer.Option(
         None, "--format", "-f", help="Log format (syslog, json, nginx, auth)"
     ),
-    model: str | None = typer.Option(None, "--model", "-m", help="Model to use for detection"),
-    sensitivity: float | None = typer.Option(
+    model: Optional[str] = typer.Option(None, "--model", "-m", help="Model to use for detection"),
+    sensitivity: Optional[float] = typer.Option(
         None, "--sensitivity", "-s", min=0.0, max=1.0, help="Detection sensitivity (0.0-1.0)"
     ),
 ) -> None:

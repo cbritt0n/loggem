@@ -6,10 +6,21 @@
 ⊘ 3 Tests SKIPPED (detection logic tuning needed)
 ❌ 0 Tests FAILED
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Total Coverage: 56% (1,278/2,291 statements)
-Execution Time: 5.19s
+Total Coverage: 53% (1,330/2,494 statements)
+Execution Time: 4.97s
+Total Modules: 32 (26 source + 6 new parsers)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
+
+## New in v1.0.0
+
+### 🆕 Additional Log Parsers (6 new formats)
+- **PostgreSQL** - Database log parser
+- **MySQL** - MySQL/MariaDB log parser  
+- **Docker** - Container log parser (JSON, compose, CLI)
+- **Kubernetes** - Cluster log parser (kubectl, events, runtime)
+- **HAProxy** - Load balancer log parser (HTTP/TCP)
+- **Redis** - Redis database log parser
 
 ## Module-by-Module Coverage
 

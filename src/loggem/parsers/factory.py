@@ -5,13 +5,20 @@ Factory for creating log parsers based on format type.
 from __future__ import annotations
 
 from pathlib import Path
+from typing import Optional
 
 from loggem.core.logging import get_logger
 from loggem.parsers.apache import ApacheLogParser
 from loggem.parsers.auth import AuthLogParser
 from loggem.parsers.base import BaseParser
+from loggem.parsers.docker import DockerParser
+from loggem.parsers.haproxy import HAProxyParser
 from loggem.parsers.json_parser import JSONParser
+from loggem.parsers.kubernetes import KubernetesParser
+from loggem.parsers.mysql import MySQLParser
 from loggem.parsers.nginx import NginxParser
+from loggem.parsers.postgresql import PostgreSQLParser
+from loggem.parsers.redis import RedisParser
 from loggem.parsers.syslog import SyslogParser
 from loggem.parsers.windows_event import WindowsEventLogParser
 
@@ -33,6 +40,12 @@ class LogParserFactory:
         "auth": AuthLogParser,
         "apache": ApacheLogParser,
         "windows": WindowsEventLogParser,
+        "postgresql": PostgreSQLParser,
+        "mysql": MySQLParser,
+        "docker": DockerParser,
+        "kubernetes": KubernetesParser,
+        "haproxy": HAProxyParser,
+        "redis": RedisParser,
     }
 
     # File path patterns for auto-detection
@@ -42,6 +55,12 @@ class LogParserFactory:
         "nginx": ["/var/log/nginx/", "nginx"],
         "apache": ["/var/log/apache2/", "/var/log/httpd/", "apache", "httpd"],
         "windows": ["windows", "event", ".evtx", ".xml"],
+        "postgresql": ["postgresql", "postgres", "pgsql"],
+        "mysql": ["mysql", "mysqld", "mariadb"],
+        "docker": ["docker", "container"],
+        "kubernetes": ["kubectl", "kubernetes", "k8s", "pod"],
+        "haproxy": ["haproxy"],
+        "redis": ["redis"],
     }
 
     @classmethod
@@ -62,9 +81,9 @@ class LogParserFactory:
     @classmethod
     def create_parser(
         cls,
-        format_type: str | None = None,
-        file_path: Path | None = None,
-        source_name: str | None = None,
+        format_type: Optional[str] = None,
+        file_path: Optional[Path] = None,
+        source_name: Optional[str] = None,
     ) -> BaseParser:
         """
         Create a parser for the specified format.

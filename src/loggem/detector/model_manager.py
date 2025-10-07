@@ -6,7 +6,7 @@ Supports multiple LLM providers: HuggingFace, OpenAI, Anthropic, Ollama, and cus
 
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, Optional
 
 from loggem.core.config import get_settings
 from loggem.core.logging import get_audit_logger, get_logger
@@ -25,7 +25,7 @@ class ModelManager:
 
     def __init__(
         self,
-        provider_type: str | None = None,
+        provider_type: Optional[str] = None,
         provider_config: dict[str, Any] | None = None,
     ) -> None:
         """
@@ -139,7 +139,7 @@ class ModelManager:
     def generate_response(
         self,
         prompt: str,
-        max_tokens: int | None = None,
+        max_tokens: Optional[int] = None,
         temperature: float = 0.7,
         top_p: float = 0.9,
     ) -> str:

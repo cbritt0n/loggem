@@ -8,7 +8,7 @@ Uses Pydantic for validation and type safety.
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Literal
+from typing import Literal, Optional
 
 from pydantic import Field, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -48,15 +48,15 @@ class ModelConfig(BaseSettings):
     )
 
     # API provider settings (OpenAI, Anthropic)
-    api_key: str | None = Field(
+    api_key: Optional[str] = Field(
         default=None,
         description="API key for cloud providers (OpenAI, Anthropic)",
     )
-    base_url: str | None = Field(
+    base_url: Optional[str] = Field(
         default=None,
         description="Base URL for API providers (OpenAI, Ollama)",
     )
-    organization: str | None = Field(
+    organization: Optional[str] = Field(
         default=None,
         description="Organization ID (OpenAI only)",
     )
@@ -119,7 +119,7 @@ class LoggingConfig(BaseSettings):
         default="INFO",
         description="Logging level",
     )
-    file: Path | None = Field(
+    file: Optional[Path] = Field(
         default=Path("./logs/loggem.log"),
         description="Log file path",
     )
@@ -220,10 +220,10 @@ class Settings(BaseSettings):
 
 
 # Global settings instance
-_settings: Settings | None = None
+_settings: Optional[Settings] = None
 
 
-def get_settings(config_file: Path | None = None) -> Settings:
+def get_settings(config_file: Optional[Path] = None) -> Settings:
     """
     Get the global settings instance.
 

@@ -62,15 +62,17 @@ class Alert:
             "message": self.message,
             "severity": self.severity.value,
             "timestamp": self.timestamp.isoformat(),
-            "anomaly": {
-                "confidence": self.anomaly.confidence,
-                "description": self.anomaly.description,
-                "log_content": self.anomaly.log_entry_id
-                if hasattr(self.anomaly, "log_entry_id")
-                else None,
-            }
-            if self.anomaly
-            else None,
+            "anomaly": (
+                {
+                    "confidence": self.anomaly.confidence,
+                    "description": self.anomaly.description,
+                    "log_content": (
+                        self.anomaly.log_entry_id if hasattr(self.anomaly, "log_entry_id") else None
+                    ),
+                }
+                if self.anomaly
+                else None
+            ),
             "metadata": self.metadata,
         }
 

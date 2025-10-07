@@ -19,12 +19,19 @@ loggem/
 │   ├── parsers/             # Log format parsers
 │   │   ├── __init__.py
 │   │   ├── base.py          # Base parser interface
-│   │   ├── factory.py       # Parser factory
+│   │   ├── factory.py       # Parser factory with auto-detection
 │   │   ├── syslog.py        # Syslog parser (RFC 3164/5424)
 │   │   ├── json_parser.py   # JSON log parser
 │   │   ├── nginx.py         # Nginx access/error logs
+│   │   ├── apache.py        # Apache/httpd access/error logs
 │   │   ├── auth.py          # Auth log parser (SSH, sudo)
-│   │   └── windows_event.py # Windows Event Log parser
+│   │   ├── windows_event.py # Windows Event Log parser
+│   │   ├── postgresql.py    # PostgreSQL database logs
+│   │   ├── mysql.py         # MySQL/MariaDB database logs
+│   │   ├── docker.py        # Docker container logs
+│   │   ├── kubernetes.py    # Kubernetes cluster logs
+│   │   ├── haproxy.py       # HAProxy load balancer logs
+│   │   └── redis.py         # Redis database logs
 │   │
 │   ├── detector/            # Anomaly detection
 │   │   ├── __init__.py
@@ -128,17 +135,28 @@ loggem/
 
 **Purpose**: Convert various log formats into standardized LogEntry objects.
 
+**Files**:
 - `base.py`: Abstract base class for all parsers
 - `factory.py`: Factory pattern for parser creation with auto-detection
 - `syslog.py`: RFC 3164 and RFC 5424 syslog formats
 - `json_parser.py`: JSON-structured logs
 - `nginx.py`: Nginx access and error logs
+- `apache.py`: Apache/httpd access and error logs
 - `auth.py`: Linux authentication logs (SSH, sudo, su)
+- `windows_event.py`: Windows Event Logs (Security, System, Application)
+- `postgresql.py`: PostgreSQL database logs
+- `mysql.py`: MySQL/MariaDB database logs
+- `docker.py`: Docker container logs (JSON, compose, CLI formats)
+- `kubernetes.py`: Kubernetes cluster logs (kubectl, events, container runtime)
+- `haproxy.py`: HAProxy load balancer logs (HTTP/TCP)
+- `redis.py`: Redis database logs
 
 **Key Classes**:
 - `BaseParser`: Abstract base with common functionality
-- `LogParserFactory`: Creates appropriate parser for log format
-- Format-specific parsers: `SyslogParser`, `JSONParser`, etc.
+- `LogParserFactory`: Creates appropriate parser for log format with auto-detection
+- Format-specific parsers: `SyslogParser`, `JSONParser`, `PostgreSQLParser`, etc.
+
+**Supported Formats**: 12 built-in parsers covering system logs, web servers, databases, containers, and load balancers
 
 ### Detector (`src/loggem/detector/`)
 
