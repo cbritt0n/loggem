@@ -1,0 +1,105 @@
+<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'>
+  <System>
+    <Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-a5ba-3e3b0328c30d}' />
+    <EventID>4624</EventID>
+    <Version>2</Version>
+    <Level>0</Level>
+    <Task>12544</Task>
+    <Opcode>0</Opcode>
+    <Keywords>0x8020000000000000</Keywords>
+    <TimeCreated SystemTime='2025-10-05T14:30:45.1234567Z' />
+    <EventRecordID>12345</EventRecordID>
+    <Correlation />
+    <Execution ProcessID='1024' ThreadID='2048' />
+    <Channel>Security</Channel>
+    <Computer>SERVER01.domain.local</Computer>
+    <Security />
+  </System>
+  <EventData>
+    <Data Name='SubjectUserSid'>S-1-5-18</Data>
+    <Data Name='SubjectUserName'>SERVER01$</Data>
+    <Data Name='SubjectDomainName'>DOMAIN</Data>
+    <Data Name='SubjectLogonId'>0x3e7</Data>
+    <Data Name='TargetUserSid'>S-1-5-21-123456789-123456789-123456789-1001</Data>
+    <Data Name='TargetUserName'>Administrator</Data>
+    <Data Name='TargetDomainName'>DOMAIN</Data>
+    <Data Name='TargetLogonId'>0x12345</Data>
+    <Data Name='LogonType'>3</Data>
+    <Data Name='LogonProcessName'>NtLmSsp </Data>
+    <Data Name='AuthenticationPackageName'>NTLM</Data>
+    <Data Name='WorkstationName'>WORKSTATION</Data>
+    <Data Name='LogonGuid'>{00000000-0000-0000-0000-000000000000}</Data>
+    <Data Name='TransmittedServices'>-</Data>
+    <Data Name='LmPackageName'>NTLM V2</Data>
+    <Data Name='KeyLength'>128</Data>
+    <Data Name='ProcessId'>0x0</Data>
+    <Data Name='ProcessName'>-</Data>
+    <Data Name='IpAddress'>192.168.1.100</Data>
+    <Data Name='IpPort'>0</Data>
+  </EventData>
+</Event>
+<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'>
+  <System>
+    <Provider Name='Microsoft-Windows-Security-Auditing' />
+    <EventID>4625</EventID>
+    <Level>0</Level>
+    <TimeCreated SystemTime='2025-10-05T14:35:12.9876543Z' />
+    <Computer>SERVER01.domain.local</Computer>
+    <Channel>Security</Channel>
+  </System>
+  <EventData>
+    <Data Name='SubjectUserName'>-</Data>
+    <Data Name='TargetUserName'>BadUser</Data>
+    <Data Name='Status'>0xc000006d</Data>
+    <Data Name='SubStatus'>0xc000006a</Data>
+    <Data Name='LogonType'>3</Data>
+    <Data Name='IpAddress'>203.0.113.45</Data>
+  </EventData>
+</Event>
+<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'>
+  <System>
+    <Provider Name='Microsoft-Windows-Kernel-General' />
+    <EventID>6008</EventID>
+    <Level>2</Level>
+    <TimeCreated SystemTime='2025-10-05T08:15:30.0000000Z' />
+    <Computer>SERVER01</Computer>
+    <Channel>System</Channel>
+  </System>
+  <EventData>
+    <Data>The previous system shutdown at 8:10:00 AM on ‎10/‎5/‎2025 was unexpected.</Data>
+  </EventData>
+</Event>
+<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'>
+  <System>
+    <Provider Name='Service Control Manager' />
+    <EventID>7034</EventID>
+    <Level>2</Level>
+    <TimeCreated SystemTime='2025-10-05T10:20:15.1234567Z' />
+    <Computer>SERVER01</Computer>
+    <Channel>System</Channel>
+  </System>
+  <EventData>
+    <Data Name='param1'>SQL Server (MSSQLSERVER)</Data>
+    <Data Name='param2'>%%0</Data>
+  </EventData>
+</Event>
+<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'>
+  <System>
+    <Provider Name='Application Error' />
+    <EventID>1000</EventID>
+    <Level>2</Level>
+    <TimeCreated SystemTime='2025-10-05T11:45:20.5555555Z' />
+    <Computer>WORKSTATION01</Computer>
+    <Channel>Application</Channel>
+  </System>
+  <EventData>
+    <Data>myapp.exe</Data>
+    <Data>1.0.0.0</Data>
+    <Data>12345678</Data>
+    <Data>kernel32.dll</Data>
+    <Data>10.0.19041.1</Data>
+    <Data>87654321</Data>
+    <Data>c0000005</Data>
+    <Data>00012345</Data>
+  </EventData>
+</Event>
