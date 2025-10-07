@@ -3,10 +3,10 @@ Nginx access and error log parser.
 """
 
 from __future__ import annotations
-from typing import Optional
 
 import re
 from datetime import datetime
+from typing import Optional
 
 from loggem.core.models import LogEntry
 from loggem.parsers.base import BaseParser

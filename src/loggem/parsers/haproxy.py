@@ -1,8 +1,8 @@
-from typing import Optional
 """HAProxy load balancer log parser."""
 
 import re
 from datetime import datetime
+from typing import Optional
 
 from .base import BaseParser, LogEntry
 

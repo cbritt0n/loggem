@@ -5,13 +5,13 @@ All log parsers inherit from BaseParser and implement the parse methods.
 """
 
 from __future__ import annotations
-from typing import Optional
 
 import re
 from abc import ABC, abstractmethod
 from collections.abc import Iterator
 from datetime import datetime
 from pathlib import Path
+from typing import Optional
 
 from loggem.core.config import get_settings
 from loggem.core.logging import get_logger

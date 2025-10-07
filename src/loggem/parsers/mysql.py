@@ -1,8 +1,8 @@
-from typing import Optional
 """MySQL database log parser."""
 
 import re
 from datetime import datetime
+from typing import Optional
 
 from .base import BaseParser, LogEntry
 

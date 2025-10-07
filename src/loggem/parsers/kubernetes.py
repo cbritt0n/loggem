@@ -1,8 +1,8 @@
-from typing import Optional
 """Kubernetes cluster log parser."""
 
 import re
 from datetime import datetime
+from typing import Optional
 
 from .base import BaseParser, LogEntry
 
